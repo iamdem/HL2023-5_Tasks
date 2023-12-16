@@ -1,0 +1,77 @@
+{
+	"info": {
+		"_postman_id": "4d572777-4b80-492d-9bc0-824935684f7b",
+		"name": "New Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18824400"
+	},
+	"item": [
+		{
+			"name": "lite-server get request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/lite/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"lite",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "json-server get posts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/json/posts/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"json",
+						"posts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "json-server get comments",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "json-server get profile",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/json/profile/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"json",
+						"profile",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
