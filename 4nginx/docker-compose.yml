@@ -1,0 +1,36 @@
+version: '3'
+services:
+  lite-server:
+    image: node
+    build:
+      context: ./lite_server
+      dockerfile: Dockerfile
+    volumes:
+      - ./lite_server/index.html:/app/index.html
+    networks:
+      - nginxnetwork
+
+  json-server:
+    image: node:14
+    build:
+      context: ./json_server
+      dockerfile: Dockerfile
+    volumes:
+      - ./json_server/db.json:/app/db.json
+    networks:
+      - nginxnetwork
+    
+  nginx:
+    image: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./static/nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - nginxnetwork
+    depends_on:
+      - lite-server
+      - json-server
+
+networks:
+  nginxnetwork:
