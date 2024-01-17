@@ -1,0 +1,119 @@
+version: '3'
+
+services:
+
+  ## ROUTER
+  router:
+    image: mongo:latest
+    command: mongos --port 27017 --configdb rs-config-server/configsvr1:27017,configsvr2:27017,configsvr3:27017 --bind_ip_all
+    ports:
+      - 27117:27017
+    volumes:
+      - ./data:/data
+      - ./scripts:/scripts
+    networks:
+      - mognodbnet
+
+  ## CONFIGURATION SERVERS (3)
+  configsvr1:
+    image: mongo:latest
+    command: mongod --port 27017 --configsvr --replSet rs-config-server
+    volumes:
+      - ./scripts:/scripts 
+    networks:
+      - mognodbnet
+  configsvr2:
+    image: mongo:latest
+    command: mongod --port 27017 --configsvr --replSet rs-config-server
+    volumes:
+      - ./scripts:/scripts
+    networks:
+      - mognodbnet
+  configsvr3:
+    image: mongo:latest 
+    command: mongod --port 27017 --configsvr --replSet rs-config-server
+    volumes:
+      - ./scripts:/scripts
+    networks:
+      - mognodbnet 
+
+  ## DATA SERVER + REPLICATIONS 1 (1 + 2)
+  shard1dataser:
+    image: mongo:latest
+    command: mongod --port 27017 --shardsvr --replSet rs-shard-1
+    volumes:
+      - ./scripts:/scripts
+    networks:
+      - mognodbnet
+  shard1datarep1:
+    image: mongo:latest
+    command: mongod --port 27017 --shardsvr --replSet rs-shard-1
+    volumes:
+      - ./scripts:/scripts
+    networks:
+      - mognodbnet  
+  shard1datarep2:
+    image: mongo:latest
+    command: mongod --port 27017 --shardsvr --replSet rs-shard-1
+    volumes:
+      - ./scripts:/scripts
+    networks:
+      - mognodbnet  
+
+  ## DATA SERVER + REPLICATIONS 2 (1 + 2)
+  shard2dataser:
+    image: mongo:latest
+    command: mongod --port 27017 --shardsvr --replSet rs-shard-2
+    volumes:
+      - ./scripts:/scripts
+    networks:
+      - mognodbnet
+  shard2datarep1:
+    image: mongo:latest
+    command: mongod --port 27017 --shardsvr --replSet rs-shard-2
+    volumes:
+      - ./scripts:/scripts
+    networks:
+      - mognodbnet  
+  shard2datarep2:
+    image: mongo:latest
+    command: mongod --port 27017 --shardsvr --replSet rs-shard-2
+    volumes:
+      - ./scripts:/scripts
+    networks:
+      - mognodbnet  
+
+  ## DATA SERVER + REPLICATION 3 (1 + 1)
+  shard3dataser:
+    image: mongo:latest
+    command: mongod --port 27017 --shardsvr --replSet rs-shard-3
+    volumes:
+      - ./scripts:/scripts
+    networks:
+      - mognodbnet
+  shard3datarep1:
+    image: mongo:latest
+    command: mongod --port 27017 --shardsvr --replSet rs-shard-3
+    volumes:
+      - ./scripts:/scripts
+    networks:
+      - mognodbnet  
+
+  ## DATA SERVER + REPLICATION 4 (1 + 1)
+  shard4dataser:
+    image: mongo:latest
+    command: mongod --port 27017 --shardsvr --replSet rs-shard-4
+    volumes:
+      - ./scripts:/scripts
+    networks:
+      - mognodbnet
+  shard4datarep1:
+    image: mongo:latest
+    command: mongod --port 27017 --shardsvr --replSet rs-shard-4
+    volumes:
+      - ./scripts:/scripts
+    networks:
+      - mognodbnet  
+
+networks:
+  mognodbnet:
